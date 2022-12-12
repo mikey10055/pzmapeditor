@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "basic-ftp": "^5.0.2",
+    "dotenv": "^16.0.3",
     "electron-squirrel-startup": "^1.0.0",
     "update-electron-app": "^2.0.1"
   },
