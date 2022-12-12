@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PZ Map Editor</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="moveable-bar">
+        <div id="title"></div>
+        <span class="material-icons outlined" id="minimizeButton">
+            minimize
+        </span>
+        <span class="material-icons outlined" id="fitScreenButton">
+            fit_screen
+        </span>
+        <span class="material-icons outlined" id="closeButton">
+            close
+        </span>
+    </div>
+    <div class="flex-con">
+        <div id="coords-container">
+            <div id="add-coord">
+                <input type="text" id="coordName" placeholder="Name">
+                <input type="text" id="startX" placeholder="startX">
+                <input type="text" id="startY" placeholder="startY">
+                <input type="text" id="endX" placeholder="endX">
+                <input type="text" id="endY" placeholder="endY">
+                <button id="addCoord">Add</button>
+            </div>
+            <div id="add-cell">
+                <input type="text" id="cellName" placeholder="Name">
+                <input type="text" id="cellX" placeholder="cellX">
+                <input type="text" id="cellY" placeholder="cellY">
+                <button id="addCell">Add</button>
+            </div>
+            <div>
+                <button id="clearCoords">Clear All Coords Sections</button>
+            </div>
+            
+            <div id="coords-list">
+                <ul id="coords"></ul>
+            </div>
+            <!-- <div id="mapframe-over" class="closed">
+                <div id="mapframe-open-close"> Open Map </div>
+                <iframe id="mapiframe" src=""></iframe>
+            </div> -->
+        </div>
+        <div id="files-container">
+            <div id="ftp-details">
+                <div id="ftp-title">
+                    <h5>FTP details</h5>
+                    <!-- hide button with default open -->
+                    <span class="material-icons outlined" id="hide-ftp-details">
+                        expand_less
+                    </span>
+                </div>
+                <div id="ftp-input-details">
+                    <input type="text" id="ftp-opt-host" placeholder="Host">
+                    <input type="text" id="ftp-opt-port" placeholder="Port">
+                    <input type="text" id="ftp-opt-user" placeholder="User">
+                    <input type="password" id="ftp-opt-pass" placeholder="Password">
+                    <!-- checkbox with label for #ftp-opt-secure -->
+                    <div id="ftp-opt-secure">
+                        <input type="checkbox" id="ftp-opt-secure-checkbox">
+                        <label for="ftp-opt-secure-checkbox">Secure</label>
+                    </div>
+                    <input type="text" id="ftp-opt-localpath" placeholder="Path to internal saves folder">
+                    <input type="text" id="ftp-opt-ftpextpath" placeholder="Path to external saves folder">
+                    <hr />
+                    <div id="ftp-opt-save">
+                        <input type="checkbox" id="ftp-opt-save-checkbox">
+                        <label for="ftp-opt-save-checkbox">Save Details</label>
+                    </div>
+                </div>
+            </div>
+            <div id="action-btns">
+                <button id="get-file-names" title="Downloads all files from all current Coord segments">Download All Files</button>
+                <button id="file-names" title="Deletes all files from all current Coord segments">Delete All Files</button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+                <div class="progress-bar-text"></div>
+            </div>
+            <code id="all-files" class="log">
+                
+            </code>
+        </div>
+    </div>
+    <!-- module script console.js -->
+    <!-- <script type="module" src="console.js"></script> -->
+    <script type="module" src="renderer.js"></script>
+</body>
+
+</html>
