@@ -1,0 +1,33 @@
+# run `npm run github-publish` to publish a release for the master branch
+# this will create a release with the latest changes from master
+# and publish it to github
+# this will also create a tag for the release
+
+name: Create Release for Master
+
+on:
+  push:
+    branches:
+      - master
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run make
+      - name: Publish Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: out/*
+          draft: false
+          prerelease: false
