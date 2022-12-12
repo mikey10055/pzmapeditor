@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 require('update-electron-app')();
 
 
