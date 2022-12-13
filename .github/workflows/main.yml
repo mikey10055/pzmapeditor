@@ -23,11 +23,20 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run make
-      - name: Publish Release
-        uses: softprops/action-gh-release@v1
+      - name: Create Tag
+        run: |
+          git tag -a v$(node -p "require('./package.json').version") -m "Release v$(node -p "require('./package.json').version")"
+          git push --follow-tags
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: out/*
+          tag_name: v$(node -p "require('./package.json').version")
+          release_name: Release v$(node -p "require('./package.json').version")
+          body: |
+            Changes in this Release
+            - ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
