@@ -1,8 +1,5 @@
 require('dotenv').config();
 
-require('update-electron-app')();
-
-
 const { app, BrowserWindow, ipcMain, Notification, Tray, Menu, ipcRenderer } = require('electron')
 const path = require('path')
 
