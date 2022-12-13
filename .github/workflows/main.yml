@@ -25,6 +25,8 @@ jobs:
         run: npm run make
       - name: Create Tag
         run: |
+          git config --local user.email "mikey10055@gmail.com"
+          git config --local user.name "mikey10055"
           git tag -a v$(node -p "require('./package.json').version") -m "Release v$(node -p "require('./package.json').version")"
           git push --follow-tags
       - name: Create Release
