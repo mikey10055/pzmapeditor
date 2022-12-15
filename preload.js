@@ -7,6 +7,9 @@ const {
 const ftp = require("basic-ftp");
 const path = require("path");
 
+const { setWindowConsole }  = require("./console.js");
+window.console = setWindowConsole(window.console);
+
 // progress bar
 function updateProgress(progress, text="") {
     const progressBar = document.querySelector('.progress-bar');
@@ -58,9 +61,6 @@ function toggleProgress() {
     }
 }
 
-const { setWindowConsole }  = require("./console.js");
-
-window.console = setWindowConsole(window.console);
 
 
 contextBridge.exposeInMainWorld("os", {
@@ -110,33 +110,58 @@ contextBridge.exposeInMainWorld("ftp", {
             const client = new ftp.Client();
             client.ftp.verbose = true;
             try {
-                console.log("Connecting to FTP server...");
-                await client.access(opts)
+                console.info("Connecting to FTP server...");
+                await client.access(opts);
+                client.on("close", () => {
+                    console.info(`Disconnected from ${FTP_HOST}!`);
+                })
             } catch (error) {
                 reject(error);
                 return;
             }
 
+            console.info(`Connected to ${FTP_HOST}!`);
+            console.info(`Getting (${files.length}) files from ${externalPath}`);
+            console.info(`Saving files to ${localPath}`);
+
+
+
             toggleProgress();
+
+            let dlFiles = [];
 
             for (let index = 0; index < files.length; index++) {
                 const file = files[index];
 
-                try {
-                    let externalPath = path.join(FTP_EXTPATH, file);
-                    let localPath = path.join(__dirname, FTP_LOCALPATH, file);
-                    externalPath = externalPath.replace(/\\/g, "/");
-                    await client.downloadTo(localPath, externalPath);
-                    // update progress bar
-
-                } catch (error) {
-                    console.warn(error);
+                if (!dlFiles.includes(file)) {
+                    try {
+                        let externalPath = path.join(FTP_EXTPATH, file);
+                        let localPath = path.join(__dirname, FTP_LOCALPATH, file);
+                        externalPath = externalPath.replace(/\\/g, "/");
+                        await client.downloadTo(localPath, externalPath);
+                        // update progress bar
+    
+                    } catch (error) {
+                        console.warn(error);
+                    }
+    
+                    dlFiles.push(file);
+                } else {
+                    console.info(`Skipping ${file}, already downloaded.`);
                 }
+
                 
                 let progress = Math.round((index / files.length) * 100);
                 updateProgress(progress, `Downloading ${file} (${index + 1}/${files.length})`);
                 
             }
+
+            console.info("Done downloading files");
+
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach((button) => {
+                button.removeAttribute("disabled");
+            });
             
             client.close();
             resolve();
@@ -179,8 +204,12 @@ contextBridge.exposeInMainWorld("ftp", {
                 const client = new ftp.Client();
                 client.ftp.verbose = true;
                 try {
-                    console.log("Connecting to FTP server...");
-                    await client.access(opts)
+                    console.info("Connecting to FTP server...");
+                    await client.access(opts);
+
+                    client.on("close", () => {
+                        console.info(`Disconnected from ${FTP_HOST}!`);
+                    })
                 } catch (error) {
                     reject(error);
                     return;
@@ -188,22 +217,37 @@ contextBridge.exposeInMainWorld("ftp", {
 
                 toggleProgress();
 
+                let rmFiles = [];
+
                 for (let index = 0; index < files.length; index++) {
                     const file = files[index];
+                    if (!rmFiles.includes(file)) {
 
-                    try {
-                        let externalPath = path.join(FTP_EXTPATH, file);
-                        externalPath = externalPath.replace(/\\/g, "/");
-                        await client.remove(externalPath);
+                        try {
+                            let externalPath = path.join(FTP_EXTPATH, file);
+                            externalPath = externalPath.replace(/\\/g, "/");
+                            await client.remove(externalPath);
+                            
+                        } catch (error) {
+                            console.warn(error);
+                        }
 
-                    } catch (error) {
-                        console.warn(error);
+                        rmFiles.push(file)
+                    } else {
+                        console.info(`Skipping ${file}, already removed.`);
                     }
 
+                        
                     let progress = Math.round((index / files.length) * 100);
                     updateProgress(progress, `Removing ${file} (${index + 1}/${files.length})`);
                 }
 
+                console.info("Done removing files");
+
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach((button) => {
+                    button.removeAttribute("disabled");
+                });
                 
                 client.close();
                 resolve();

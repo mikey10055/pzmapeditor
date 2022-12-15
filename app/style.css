@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: row;
     height: calc(100vh - 28px);
-    padding-top: 10px;
+    /* padding-top: 10px; */
 }
 
 .flex-con > div {
@@ -27,7 +27,7 @@ body {
 .moveable-bar {
     -webkit-app-region: drag;
     max-height: 30px;
-    background: #202225;
+    background: #18191b;
     position: relative;
     display: flex;
     z-index: 12;
@@ -514,6 +514,16 @@ ul#coords {
     margin: 5px 0;
     border-radius: 5px;
     color: #a6a7ad;
+    flex-wrap: wrap;
+}
+
+.btnContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 #coords-container {
@@ -588,6 +598,51 @@ ul#coords {
     align-items: center;
     padding: 10px;
     width: 100%;
+}
+
+.popup-btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto;
+}
+
+.popup-btn-container button {
+    padding: 10px 50px;
+    border-radius: 5px;
+    flex: 1 1 auto;
+}
+
+.confirmBtn {
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0 10px;
+    background: #075607;
+    color: #ffffff;
+}
+
+.confirmBtn:hover {
+    background: #0f7f0f;
+}
+
+.cancelBtn {
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0 10px;
+    background: #5f1515;
+    color: #ffffff;
+}
+
+.cancelBtn:hover {
+    background: #7f1f1f;
+}
+
+.confirm {
+    display: flex;
 }
 
 #mapiframe {
@@ -769,6 +824,7 @@ hr {
     width: 100%;
     position: relative;
     height: 50px;
+    max-height: 15px;
     background: #8b8f92;
 }
 
@@ -813,4 +869,175 @@ code div {
     
     /* css-3 */
     word-wrap: break-word;
+}
+
+#ftp-input-details label {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    margin-bottom: 2px;
+}
+
+
+/* pill button styles reference snippet from fn.js */
+.pill {
+    display: flex;
+    width: 200px;
+    /* padding: 0.5em 1em; */
+    /* border-radius: 2em; */
+    text-decoration: none;
+    /* color: #a6a7ad; */
+    /* background: #353637; */
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.pill-remove {
+    background: #353637;
+    color: #a6a7ad;
+    /* left side border-raduis */
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+}
+
+.pill-remove:hover {
+    /* remove background color */
+    background: #a90505;
+    color: #a6a7ad;
+}
+
+.pill-download {
+    background: #353637;
+    color: #a6a7ad;
+    /* right side border-raduis */
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.pill-download:hover {
+    /* background: #353637;
+    color: #a6a7ad; */
+    background: #109c20;
+    color: #a6a7ad;
+}
+
+.pill-text {
+    color: #a6a7ad;
+    background: #353637;
+    padding: 8px 5px 9px 5px;
+    font-size: 0.8rem;
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.pill .material-icon {
+    font-size: 1rem;
+    font-family: 'Material Icons';
+}
+
+.bar-title-icon {
+    width: 15px;
+    margin: 5px -1px 0;
+    filter:opacity(0.5);
+}
+
+.search-area {
+    display: flex;
+}
+
+#coordSearch {
+    width: 100%;
+    /* height: 100%; */
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background: #353637;
+}
+
+button.deleteBtn:hover {
+    background: rgba(0,0,0,0);
+    color: #811818;
+}
+
+#clear-ftp-details-btn {
+    margin-left: auto;
+}
+
+#ftp-opt-save {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#ftp-opt-save label {
+    margin-left: 10px;
+}
+
+.add-popup {
+    position: fixed;
+    /* center of screen */
+    left: 0;
+    top: 28px;
+    width: 100%;
+    height: calc(100% - 28px);
+    z-index: 999;
+    display: none;
+    background-color: #171719;
+}
+
+.add-popup.show {
+    display: block;
+}
+
+.add-pop-up-inner {
+    position: absolute;
+    top: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #171719;
+    z-index: 888;
+
+    width: 50vw;
+    height: 50vh;
+    border-radius: 5px;
+}
+
+.pop-up-title {
+    padding: 10px;
+    background-color: #171719;
+    color: #a6a7ad;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: flex;
+    padding-left: 15px;
+    padding-bottom: 100px;
+}
+
+.pop-up-title i {
+    margin-right: 10px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.pop-up-title i:hover {
+    color: #efeff0;
+}
+
+/* .transparent-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 777;
+    display: none;
+}
+
+.show .transparent-background {
+    display: block;
+} */
+
+.error {
+    z-index: 10000;
 }

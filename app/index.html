@@ -12,7 +12,7 @@
 
 <body>
     <div class="moveable-bar">
-        <div id="title"></div>
+        <div id="title"><img src="icon.ico" class="bar-title-icon"/></div>
         <span class="material-icons outlined" id="minimizeButton">
             minimize
         </span>
@@ -25,22 +25,34 @@
     </div>
     <div class="flex-con">
         <div id="coords-container">
-            <div id="add-coord">
-                <input type="text" id="coordName" placeholder="Name">
-                <input type="text" id="startX" placeholder="startX">
-                <input type="text" id="startY" placeholder="startY">
-                <input type="text" id="endX" placeholder="endX">
-                <input type="text" id="endY" placeholder="endY">
-                <button id="addCoord">Add</button>
+            <div class="add-popup">
+                <!-- <div class="transparent-background"></div> -->
+                <div class="add-pop-up-inner">
+                    <div class="pop-up-title">
+                        <span>Add Coords</span>
+                        <i class="material-icons close">close</i>
+                    </div>
+                    <div id="add-coord">
+                        <input type="text" id="coordName" placeholder="Name">
+                        <input type="text" id="startX" placeholder="startX">
+                        <input type="text" id="startY" placeholder="startY">
+                        <input type="text" id="endX" placeholder="endX">
+                        <input type="text" id="endY" placeholder="endY">
+                        <button id="addCoord">Add</button>
+                    </div>
+                    <div id="add-cell">
+                        <input type="text" id="cellName" placeholder="Name">
+                        <input type="text" id="cellX" placeholder="cellX">
+                        <input type="text" id="cellY" placeholder="cellY">
+                        <button id="addCell">Add</button>
+                    </div>
+                </div>
             </div>
-            <div id="add-cell">
-                <input type="text" id="cellName" placeholder="Name">
-                <input type="text" id="cellX" placeholder="cellX">
-                <input type="text" id="cellY" placeholder="cellY">
-                <button id="addCell">Add</button>
-            </div>
-            <div>
-                <button id="clearCoords">Clear All Coords Sections</button>
+            
+            <div class="search-area">
+                <input type="search" id="coordSearch" placeholder="Search">
+                <button id="addSection">Add Section</button>
+                <button id="clearCoords">Remove all Sections</button>
             </div>
             
             <div id="coords-list">
@@ -61,21 +73,28 @@
                     </span>
                 </div>
                 <div id="ftp-input-details">
+                    <label for="ftp-opt-host">Host</label>
                     <input type="text" id="ftp-opt-host" placeholder="Host">
+                    <label for="ftp-opt-port">Port</label>
                     <input type="text" id="ftp-opt-port" placeholder="Port">
+                    <label for="ftp-opt-user">User</label>
                     <input type="text" id="ftp-opt-user" placeholder="User">
+                    <label for="ftp-opt-pass">Password</label>
                     <input type="password" id="ftp-opt-pass" placeholder="Password">
                     <!-- checkbox with label for #ftp-opt-secure -->
                     <div id="ftp-opt-secure">
                         <input type="checkbox" id="ftp-opt-secure-checkbox">
                         <label for="ftp-opt-secure-checkbox">Secure</label>
                     </div>
+                    <label for="ftp-opt-localpath">Local Path</label>
                     <input type="text" id="ftp-opt-localpath" placeholder="Path to internal saves folder">
+                    <label for="ftp-opt-ftpextpath">FTP External Path</label>
                     <input type="text" id="ftp-opt-ftpextpath" placeholder="Path to external saves folder">
                     <hr />
                     <div id="ftp-opt-save">
                         <input type="checkbox" id="ftp-opt-save-checkbox">
                         <label for="ftp-opt-save-checkbox">Save Details</label>
+                        <button id="clear-ftp-details-btn">Clear</button>
                     </div>
                 </div>
             </div>
