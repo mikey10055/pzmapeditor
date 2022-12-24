@@ -172,34 +172,53 @@ document.addEventListener('DOMContentLoaded', () => {
 function saveFtpDetailsToStorage() {
   const options = getOptions();
 
+  // check name is defined and not empty
+  if (options.FTP_NAME === '') {
+    errorMessage('Please enter a name for the FTP options');
+    return;
+  }
+    
+    localStorage.setItem("currentFtpOptions", options.FTP_NAME);
+
+    let alloptions = JSON.parse(localStorage.getItem('ftpOptions'));
+
     localStorage.setItem('ftpOptions', JSON.stringify({
-      ...options,
-      savecheckbox: saveFtpDetails.checked,
-      FTP_SECURE: document.getElementById('ftp-opt-secure-checkbox').checked,
+      ...alloptions,
+      [options.FTP_NAME]: {
+        ...options,
+        FTP_SECURE: document.getElementById('ftp-opt-secure-checkbox').checked,
+      }
     }));
+
+
+    setFtpOptions();
 
 }
 
 // save details
-const saveFtpDetails = document.querySelector('#ftp-opt-save-checkbox');
-saveFtpDetails.addEventListener('click', () => {
-  const options = getOptions();
-  if (saveFtpDetails.checked) {
-    saveFtpDetailsToStorage();
-  } else {
-    localStorage.removeItem('ftpOptions');
-  }
+// const saveFtpDetails = document.querySelector('#ftp-opt-save-checkbox');
+// saveFtpDetails.addEventListener('click', () => {
+//   const options = getOptions();
+//   if (saveFtpDetails.checked) {
+//     saveFtpDetailsToStorage();
+//   } else {
+//     localStorage.removeItem('ftpOptions');
+//   }
   
-});
+// });
 
 // load details
 
-// document on load
+// loadFtpOptions
 
-document.addEventListener('DOMContentLoaded', () => {
+function loadFtpOptions() {
+  let alloptions = JSON.parse(localStorage.getItem('ftpOptions'));
+  let currentFtpOptions = localStorage.getItem('currentFtpOptions');
 
-  const options = JSON.parse(localStorage.getItem('ftpOptions'));
+  let options = alloptions[currentFtpOptions];
+
   if (options) {
+    document.getElementById('ftp-opt-name').value = options.FTP_NAME;
     document.getElementById('ftp-opt-host').value = options.FTP_HOST;
     document.getElementById('ftp-opt-user').value = options.FTP_USER;
     document.getElementById('ftp-opt-pass').value = options.FTP_PASS;
@@ -207,11 +226,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('ftp-opt-localpath').value = options.FTP_LOCALPATH;
     document.getElementById('ftp-opt-ftpextpath').value = options.FTP_EXTPATH;
     document.getElementById('ftp-opt-port').value = options.FTP_PORT;
-    document.getElementById('ftp-opt-save-checkbox').checked = options.savecheckbox;
-    
-  } else {
-    // errorMessage('No FTP details saved!');
   }
+}
+
+
+// document on load
+
+document.addEventListener('DOMContentLoaded', () => {
+
+loadFtpOptions();
+setFtpOptions();
 
 });
 
@@ -225,14 +249,14 @@ const ftpOptionsEles = [
  document.getElementById('ftp-opt-localpath'),
  document.getElementById('ftp-opt-ftpextpath'),
  document.getElementById('ftp-opt-port'),
- document.getElementById('ftp-opt-save-checkbox')
+//  document.getElementById('ftp-opt-save-checkbox')
 ];
 
-ftpOptionsEles.forEach((ele) => {
-  ele.addEventListener('change', () => {
-    saveFtpDetailsToStorage();
-  });
-});
+// ftpOptionsEles.forEach((ele) => {
+//   ele.addEventListener('change', () => {
+//     saveFtpDetailsToStorage();
+//   });
+// });
 
 // on search input change #coordSearch
 
@@ -245,19 +269,36 @@ coordSearch.addEventListener('input', () => {
 
 // on #clear-ftp-details-btn click
 
+function clearFtpDetails() {
+    document.getElementById('ftp-opt-name').value = '';
+    document.getElementById('ftp-opt-host').value = '';
+    document.getElementById('ftp-opt-user').value = '';
+    document.getElementById('ftp-opt-pass').value = '';
+    document.getElementById('ftp-opt-secure-checkbox').checked = false;
+    document.getElementById('ftp-opt-localpath').value = '';
+    document.getElementById('ftp-opt-ftpextpath').value = '';
+    document.getElementById('ftp-opt-port').value = '';
+}
+
 const clearFtpDetailsBtn = document.querySelector('#clear-ftp-details-btn');
 clearFtpDetailsBtn.addEventListener('click', () => {
-  document.getElementById('ftp-opt-host').value = '';
-  document.getElementById('ftp-opt-user').value = '';
-  document.getElementById('ftp-opt-pass').value = '';
-  document.getElementById('ftp-opt-secure-checkbox').checked = false;
-  document.getElementById('ftp-opt-localpath').value = '';
-  document.getElementById('ftp-opt-ftpextpath').value = '';
-  document.getElementById('ftp-opt-port').value = '';
-  document.getElementById('ftp-opt-save-checkbox').checked = false;
-  localStorage.removeItem('ftpOptions');
+  clearFtpDetails();
+  // document.getElementById('ftp-opt-save-checkbox').checked = false;
+  // // localStorage.removeItem('ftpOptions');
+
+  // remove ftp options by name
+
 });
 
+function deleteFtpOptions() {
+    let alloptions = JSON.parse(localStorage.getItem('ftpOptions'));
+    let currentFtpOptions = localStorage.getItem('currentFtpOptions');
+
+    delete alloptions[currentFtpOptions];
+
+    localStorage.setItem('ftpOptions', JSON.stringify(alloptions));
+    setFtpOptions();
+}
 
 const closePopup = document.querySelector('.pop-up-title .close');
 
@@ -271,4 +312,73 @@ const addSection = document.querySelector('#addSection');
 
 addSection.addEventListener('click', () => {
   document.querySelector('.add-popup').classList.add('show');
+});
+
+// save buton click
+
+const saveBtn = document.querySelector('#save-ftp-details-btn');
+
+saveBtn.addEventListener('click', () => {
+  saveFtpDetailsToStorage();
+});
+
+// set #ftp-options select
+
+const ftpOptionsSelect = document.querySelector('#ftp-options');
+
+ftpOptionsSelect.addEventListener('change', () => {
+  const options = getOptions();
+  localStorage.setItem("currentFtpOptions", options.FTP_NAME);
+
+  loadFtpOptions();
+
+});
+
+
+// set all ftp name options
+
+function setFtpOptions() {
+  
+  let ftpOptions = JSON.parse(localStorage.getItem('ftpOptions'));
+  let currentFtpOptions = localStorage.getItem('currentFtpOptions');
+
+  if (ftpOptions) {
+    let options = Object.keys(ftpOptions);
+    let optionsHtml = '';
+    options.forEach((option) => {
+      optionsHtml += `<option value="${option}">${option}</option>`;
+    });
+    ftpOptionsSelect.innerHTML = optionsHtml;
+    ftpOptionsSelect.value = currentFtpOptions;
+  }
+}
+
+// #ftp-options on change
+
+const ftpOptions = document.querySelector('#ftp-options');
+
+ftpOptions.addEventListener('change', (e) => {
+  console.log('ftp-options change');
+  let val = e.target.value;
+  localStorage.setItem("currentFtpOptions", val);
+  loadFtpOptions();
+});
+
+
+function removeDetails() {
+  let ftpOptions = JSON.parse(localStorage.getItem('ftpOptions'));
+  let currentFtpOptions = localStorage.getItem('currentFtpOptions');
+
+  delete ftpOptions[currentFtpOptions];
+  localStorage.setItem('ftpOptions', JSON.stringify(ftpOptions));
+  setFtpOptions();
+}
+
+// delete-ftp-details-btn click
+
+const deleteFtpDetailsBtn = document.querySelector('#delete-ftp-details-btn');
+
+deleteFtpDetailsBtn.addEventListener('click', () => {
+  removeDetails();
+  clearFtpDetails();
 });

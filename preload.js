@@ -136,8 +136,9 @@ contextBridge.exposeInMainWorld("ftp", {
                 if (!dlFiles.includes(file)) {
                     try {
                         let externalPath = path.join(FTP_EXTPATH, file);
-                        let localPath = path.join(__dirname, FTP_LOCALPATH, file);
+                        let localPath = path.join(FTP_LOCALPATH, file);
                         externalPath = externalPath.replace(/\\/g, "/");
+                        // console.log(`${externalPath} => ${localPath}`);
                         await client.downloadTo(localPath, externalPath);
                         // update progress bar
     

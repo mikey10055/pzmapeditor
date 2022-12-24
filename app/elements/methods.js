@@ -167,6 +167,7 @@ export function genarateMapFileNamesForAllCoords(currentCoord, start="map_", end
 
 export function getOptions() {
     return {
+      FTP_NAME: document.getElementById('ftp-opt-name').value,
       FTP_HOST: document.getElementById('ftp-opt-host').value,
       FTP_USER: document.getElementById('ftp-opt-user').value,
       FTP_PASS: document.getElementById('ftp-opt-pass').value,

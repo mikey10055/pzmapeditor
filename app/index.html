@@ -72,7 +72,14 @@
                         expand_less
                     </span>
                 </div>
+                <div>
+                    <select id="ftp-options">
+                        <option value="0">Select FTP</option>
+                    </select>
+                </div>
                 <div id="ftp-input-details">
+                    <label for="ftp-opt-name">Name</label>
+                    <input type="text" id="ftp-opt-name" placeholder="Name">
                     <label for="ftp-opt-host">Host</label>
                     <input type="text" id="ftp-opt-host" placeholder="Host">
                     <label for="ftp-opt-port">Port</label>
@@ -92,8 +99,10 @@
                     <input type="text" id="ftp-opt-ftpextpath" placeholder="Path to external saves folder">
                     <hr />
                     <div id="ftp-opt-save">
-                        <input type="checkbox" id="ftp-opt-save-checkbox">
-                        <label for="ftp-opt-save-checkbox">Save Details</label>
+                        <!-- <input type="checkbox" id="ftp-opt-save-checkbox">
+                        <label for="ftp-opt-save-checkbox">Save Details</label> -->
+                        <button id="save-ftp-details-btn">Save</button>
+                        <button id="delete-ftp-details-btn">Delete</button>
                         <button id="clear-ftp-details-btn">Clear</button>
                     </div>
                 </div>

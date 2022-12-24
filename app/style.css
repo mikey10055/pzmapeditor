@@ -1041,3 +1041,39 @@ button.deleteBtn:hover {
 .error {
     z-index: 10000;
 }
+
+
+select {
+    background: #353637;
+    color: #a6a7ad;
+    border: 1px solid #2f3136;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+select option {
+    background: #353637;
+    color: #a6a7ad;
+}
+
+select option:hover {
+    background: #353637;
+    color: #a6a7ad;
+}
+
+select option:active {
+    background: #353637;
+    color: #a6a7ad;
+}
+
+select option:focus {
+    background: #353637;
+    color: #a6a7ad;
+}
+
+select option:disabled {
+    background: #353637;
+    color: #a6a7ad;
+}
+
