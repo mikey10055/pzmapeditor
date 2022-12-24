@@ -112,9 +112,6 @@ contextBridge.exposeInMainWorld("ftp", {
             try {
                 console.info("Connecting to FTP server...");
                 await client.access(opts);
-                client.on("close", () => {
-                    console.info(`Disconnected from ${FTP_HOST}!`);
-                })
             } catch (error) {
                 reject(error);
                 return;
@@ -208,9 +205,6 @@ contextBridge.exposeInMainWorld("ftp", {
                     console.info("Connecting to FTP server...");
                     await client.access(opts);
 
-                    client.on("close", () => {
-                        console.info(`Disconnected from ${FTP_HOST}!`);
-                    })
                 } catch (error) {
                     reject(error);
                     return;
