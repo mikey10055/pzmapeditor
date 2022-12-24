@@ -1077,3 +1077,13 @@ select option:disabled {
     color: #a6a7ad;
 }
 
+
+#get-file-names:hover, #download-mod-data:hover {
+    background: #0f7f0f;
+    color: #a6a7ad;
+}
+
+#file-names:hover, #delete-mod-data:hover {
+    background: #a90505;
+    color: #a6a7ad;
+}

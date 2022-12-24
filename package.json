@@ -1,6 +1,6 @@
 {
   "name": "pzmapeditor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Select chunks of the map to edit",
   "main": "main.js",
   "scripts": {

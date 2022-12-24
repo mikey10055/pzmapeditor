@@ -1,7 +1,17 @@
 import { createElement, cellToCoords, coordsToCell, removeLastChar } from "./fn.js";
 import { confirmPopup, errorMessage } from "./elements/popups.js";
 
-import {displayCoords, addCoord, deleteCoord, clearCoords, addPZCellCoord, genarateMapFileNamesForAllCoords, getOptions} from './elements/methods.js';
+import {
+  displayCoords,
+  addCoord,
+  deleteCoord,
+  removeAllMapFiles,
+  clearCoords,
+  addPZCellCoord,
+  genarateMapFileNamesForAllCoords,
+  getOptions,
+  downloadAllMapFiles
+} from './elements/methods.js';
 
 window.console = os.setWindowConsole(window.console);
 
@@ -374,11 +384,22 @@ function removeDetails() {
   setFtpOptions();
 }
 
-// delete-ftp-details-btn click
-
 const deleteFtpDetailsBtn = document.querySelector('#delete-ftp-details-btn');
 
 deleteFtpDetailsBtn.addEventListener('click', () => {
   removeDetails();
   clearFtpDetails();
+});
+
+const downloadModData = document.querySelector('#download-mod-data');
+
+downloadModData.addEventListener('click', () => {
+  downloadAllMapFiles(["global_mod_data.bin"])
+});
+
+const deleteModData = document.querySelector('#delete-mod-data');
+
+deleteModData.addEventListener('click', () => {
+  console.log('delete-mod-data click')
+  removeAllMapFiles(["global_mod_data.bin"]);
 });
