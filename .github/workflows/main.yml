@@ -1,44 +1,28 @@
-# run `npm run github-publish` to publish a release for the master branch
-# this will create a release with the latest changes from master
-# and publish it to github
-# this will also create a tag for the release
+# # run `npm run github-publish` to publish a release for the master branch
+# # this will create a release with the latest changes from master
+# # and publish it to github
+# # this will also create a tag for the release
 
-name: Create Release for Master
+# name: Create Release for Master
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
       
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18.x
-      - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run make
-      - name: Create Tag
-        run: |
-          git config --local user.email "mikey10055@gmail.com"
-          git config --local user.name "mikey10055"
-          git tag -a v$(node -p "require('./package.json').version") -m "Release v$(node -p "require('./package.json').version")"
-          git push --follow-tags
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v$(node -p "require('./package.json').version")
-          release_name: Release v$(node -p "require('./package.json').version")
-          body: |
-            Changes in this Release
-            - ${{ github.event.head_commit.message }}
-          draft: false
-          prerelease: false
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#   # use nodejs 18
+#       - uses: actions/setup-node@v2
+#         with:
+#           node-version: '18'
+#           cache: 'npm'
+#   # checkout the repo
+#       - uses: actions/checkout@v2
+#   # install dependencies
+#       - run: npm ci
+#   # build the project
+#       - run: npm run make
+#   # create tag name from package.json and output it
